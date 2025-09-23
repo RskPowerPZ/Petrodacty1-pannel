@@ -2,7 +2,7 @@
 import json
 import os
 from datetime import datetime, timedelta, timezone
-from github_utils import read_file_from_github, write_file_to_github
+from github_utils import read_file_from_github, write_file_to_github, append_to_logs
 
 def get_reset_date():
     ist = timezone(timedelta(hours=5, minutes=30))
