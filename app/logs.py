@@ -1,7 +1,8 @@
 # app/logs.py
 from datetime import datetime
 from config import LOGS_GROUP_ID
-from app.globals import bot, append_to_logs
+from app.globals import bot
+from github_utils import append_to_logs
 
 async def log_action(message):
     timestamp = datetime.now().strftime('%H:%M %d-%m-%Y')
