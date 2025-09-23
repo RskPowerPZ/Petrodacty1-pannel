@@ -1,5 +1,4 @@
-python-telegram-bot
-aiohttp
+# requirements.txt
+pyTelegramBotAPI
 requests
 PyGithub
-telebot
