@@ -2,3 +2,9 @@
 pyTelegramBotAPI
 requests
 PyGithub
+aiogram
+python-dotenv
+aiohttp
+aioredis
+uvloop
+apscheduler
