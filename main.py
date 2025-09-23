@@ -10,10 +10,23 @@ from config import BOT_TOKEN, OWNER_ID, LOGS_GROUP_ID
 import app.globals as g
 from app.globals import load_json, save_json
 from app.logs import log_action
-from app.grant import validate_grant, deduct_group_remain, reset_group_if_needed
+from app.grant import validate_grant, deduct_group_remain
 from app.vip import check_vip_status, deduct_vip_remain
-from app.block import is_blocked
-from config import API_URL
+from app.mode import check_channel_join
+
+from admin.block import register as register_block
+from admin.broadcast import register as register_broadcast
+from admin.grant import register as register_grant
+from admin.likes import register as register_likes_admin
+from admin.mode import register as register_mode
+from admin.remains import register as register_remains_admin
+from admin.vip import register as register_vip
+
+from tools.connect import register as register_connect
+from tools.idinfo import register as register_idinfo
+from tools.remain import register as register_remain
+from tools.userinfo import register as register_userinfo
+from tools.likes import register as register_likes_user, execute_like
 
 # Ensure data directory exists
 os.makedirs('data', exist_ok=True)
@@ -55,27 +68,6 @@ class SaveUserMiddleware(BaseMiddleware):
 
 bot.setup_middleware(SaveUserMiddleware())
 
-# Import and register handlers from modules
-from app.block import not_blocked
-from app.response import *
-from app.grant import validate_grant, deduct_group_remain
-from app.vip import check_vip_status, deduct_vip_remain
-from app.mode import check_channel_join
-
-from admin.block import register as register_block
-from admin.broadcast import register as register_broadcast
-from admin.grant import register as register_grant
-from admin.likes import register as register_likes_admin
-from admin.mode import register as register_mode
-from admin.remains import register as register_remains_admin
-from admin.vip import register as register_vip
-
-from tools.connect import register as register_connect
-from tools.idinfo import register as register_idinfo
-from tools.remain import register as register_remain
-from tools.userinfo import register as register_userinfo
-from tools.likes import register as register_likes_user, execute_like
-
 # Register all
 register_block(bot)
 register_broadcast(bot)
@@ -96,19 +88,20 @@ async def auto_like_loop():
         await asyncio.sleep(3600)  # Check every hour
         ist = timezone(timedelta(hours=5, minutes=30))
         now = datetime.now(ist)
-        if now.hour != 4 or now.minute > 5:  # Run only around 4 AM IST
-            continue
+        if now.hour < 4 or now.hour > 4 or now.minute > 5:
+            continue  # Run only around 4 AM IST for 5 minutes
         for user_id_str, items in list(g.autos.items()):
             user_id = int(user_id_str)
             if await is_blocked(user_id):
                 continue
             for item in items:
-                last_liked = datetime.fromisoformat(item.get('last_liked', '2000-01-01T00:00:00'))
+                last_liked_str = item.get('last_liked', '2000-01-01T00:00:00')
+                last_liked = datetime.fromisoformat(last_liked_str)
                 if now - last_liked < timedelta(hours=24):
                     continue
-                # Find a group where the user can execute the like
+                # Find a valid group
                 group_id = None
-                for gid in g.grants.keys():
+                for gid in g.grants:
                     if await validate_grant(int(gid)):
                         group_id = int(gid)
                         break
@@ -149,7 +142,9 @@ async def auto_like_loop():
                 except:
                     await log_action(f"Failed to notify user {user_id_str} of auto like")
 
-asyncio.create_task(auto_like_loop())
+async def main():
+    asyncio.create_task(auto_like_loop())
+    await bot.infinity_polling(timeout=20, request_timeout=600)
 
-# Run bot
-asyncio.run(bot.infinity_polling(timeout=20, request_timeout=600))
+if __name__ == '__main__':
+    asyncio.run(main())
