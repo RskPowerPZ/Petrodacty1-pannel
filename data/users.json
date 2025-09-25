@@ -23,7 +23,7 @@
         "name": "Rtx",
         "vip": true,
         "remains": 2,
-        "blocked": false,
+        "blocked": true,
         "last_reset": "2025-09-25"
     },
     "1295542470": {
