@@ -29,3 +29,4 @@
 [09:58 25-09-2025] User 8462612416 blocked. Reason: chii teri
 [09:58 25-09-2025] User 7470004765 blocked. Reason: No reason provided
 [09:59 25-09-2025] User 7470004765 unblocked.
+[10:00 25-09-2025] Failed to send broadcast to 1295542470: A request to the Telegram API was unsuccessful. Error code: 403. Description: Forbidden: bot can't initiate conversation with a user
