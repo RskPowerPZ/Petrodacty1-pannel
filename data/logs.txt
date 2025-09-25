@@ -28,3 +28,4 @@
 [12:47 22-09-2025] VIP added for user 6264372980 for 54 days with daily limit 61.
 [09:58 25-09-2025] User 8462612416 blocked. Reason: chii teri
 [09:58 25-09-2025] User 7470004765 blocked. Reason: No reason provided
+[09:59 25-09-2025] User 7470004765 unblocked.
