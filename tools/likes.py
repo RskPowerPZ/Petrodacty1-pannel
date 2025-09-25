@@ -1,6 +1,6 @@
-# tools/likes.py
 import requests
 from datetime import datetime, date, timedelta
+import asyncio
 from config import API_URL
 from app.response import *
 from app.logs import log_action
@@ -13,7 +13,7 @@ from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 LINK = "https://t.me/+Wj9XsjE7a4s1N2I1"
 
-async def execute_like(region, uid, user_id, group_id, auto=False):
+async def execute_like(region, uid, user_id, group_id=None, auto=False):
     try:
         headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'}
         resp = requests.get(f"{API_URL}?region={region}&uid={uid}&key=@adityaapis", headers=headers, timeout=10)
@@ -37,12 +37,62 @@ async def execute_like(region, uid, user_id, group_id, auto=False):
 <a href="{LINK}">[⸙]</a> ᴀғᴛᴇʀ ➳ <b>{data['after']}</b>\n
 <a href="{LINK}">[⸙]</a> ɢɪᴠᴇɴ ➳ <b>{data['given']}</b>\n
 <a href="{LINK}">[⸙]</a> ᴛɪᴍᴇ ➳ <code>{time_str}</code>\n
-[⸙] ʙᴏᴛ ʙʏ ➳ <a href="https://t.me/+Wj9XsjE7a4s1N2I1">⏤꯭𖣐᪵𖡡꯭𝆭𐎓⏤𝐑𝐚𝐡𝐮𝐥 ꯭𖠌𐎙ꭙ⁷𖡡</a>\n
+[⸙] 𝐃𝐞𝐯 ➳ <a href="tg://user?id=7439897927">⏤꯭𖣐᪵𖡡꯭𝆭𐎓⏤𝐑𝐚𝐡𝐮𝐥 ꯭𖠌𐎙ꭙ⁷𖡡</a>\n
 """
         return None, text
     except Exception as e:
         await log_action(f"API exception for {uid}: {str(e)}")
         return SERVER_BUSY, None
+
+async def auto_like_runner():
+    while True:
+        now = datetime.now()
+        for user_id_str, item_list in autos.copy().items():
+            user_id = int(user_id_str)
+            is_vip = await check_vip_status(user_id)
+            user_id_str = str(user_id)  # redundant but ok
+            remains_ok = False
+            if is_vip:
+                if vips.get(user_id_str, {}).get('remains', 0) > 0:
+                    remains_ok = True
+            else:
+                current_reset = get_reset_date()
+                user_data = users.get(user_id_str, {})
+                last_reset = user_data.get('last_reset', '2000-01-01')
+                if last_reset < current_reset:
+                    user_data['remains'] = 2
+                    user_data['last_reset'] = current_reset
+                    users[user_id_str] = user_data
+                    save_json('users.json', users)
+                if user_data.get('remains', 0) > 0:
+                    remains_ok = True
+            if not remains_ok:
+                continue
+            for item in item_list:
+                last_liked = datetime.fromisoformat(item['last_liked'])
+                if now - last_liked > timedelta(days=1):  # Daily auto like
+                    region = item['region']
+                    uid = item['uid']
+                    error, success_text = await execute_like(region, uid, user_id, None, auto=True)
+                    if error:
+                        await log_action(f"Auto like error for {user_id}: {error}")
+                        continue
+                    # Deduct remains
+                    if is_vip:
+                        await deduct_vip_remain(user_id)
+                    else:
+                        users[user_id_str]['remains'] -= 1
+                        save_json('users.json', users)
+                    # Update last liked
+                    item['last_liked'] = now.isoformat()
+                    save_json('autos.json', autos)
+                    # Send notification to user
+                    try:
+                        await bot.send_message(user_id, success_text, parse_mode="HTML", disable_web_page_preview=True)
+                    except Exception as e:
+                        await log_action(f"Failed to send auto like message to {user_id}: {str(e)}")
+                    await log_action(f"Auto like executed for {user_id} for {region} {uid}")
+        await asyncio.sleep(3600)  # Check every hour
 
 def register(bot):
     @bot.message_handler(commands=['like'])
@@ -150,13 +200,13 @@ def register(bot):
 
 <a href="{LINK}">[⸙]</a> ʏᴏᴜ ᴀʀᴇ ɴᴏᴛ ᴀ ᴠɪᴘ ᴍᴇᴍʙᴇʀ.\n
 <a href="{LINK}">[⸙]</a> ᴘʟᴇᴀsᴇ ᴜᴘɢʀᴀᴅᴇ ᴛᴏ ᴠɪᴘ ᴛᴏ ᴜɴʟᴏᴄᴋ ᴛʜɪs ғᴇᴀᴛᴜʀᴇ.\n
-[⸙] ʙᴏᴛ ʙʏ ➳ <a href="https://t.me/+Wj9XsjE7a4s1N2I1">⏤꯭𖣐᪵𖡡꯭𝆭𐎓⏤𝐑𝐚𝐡𝐮𝐥 ꯭𖠌𐎙ꭙ⁷𖡡</a>\n
+[⸙] 𝐃𝐞𝐯 ➳ <a href="tg://user?id=7439897927">⏤꯭𖣐᪵𖡡꯭𝆭𐎓⏤𝐑𝐚𝐡𝐮𝐥 ꯭𖠌𐎙ꭙ⁷𖡡</a>\n
 """
             await bot.reply_to(message, text, parse_mode="HTML", disable_web_page_preview=True)
             return
 
         data = vips.get(user_id_str, {})
-        status = "𝐀𝐜𝐭𝐢𝐯𝐞 " if is_vip else "𝐄𝐱𝐩𝐢ʀ𝐞𝐝 "
+        status = "𝐀𝐜𝐭𝐢𝐯𝐞" if is_vip else "𝐄𝐱𝐩𝐢ʀ𝐞𝐝"
         bought_date = data.get("bought_date", "N/A")
         expiry_date = data.get("expiry_date", "N/A")
         daily_limit = data.get("daily_limit", 0)
@@ -172,7 +222,7 @@ def register(bot):
 <a href="{LINK}">[⸙]</a> ᴇxᴘɪʀʏ ➳ <code>{expiry_date}</code>\n
 <a href="{LINK}">[⸙]</a> ᴅᴀɪʟʏ ʟɪᴍɪᴛ ➳ <code>{daily_limit}</code>\n
 <a href="{LINK}">[⸙]</a> ʀᴇᴍᴀɪɴs ➳ <code>{remains}</code>\n
-[⸙] ʙᴏᴛ ʙʏ ➳ <a href="https://t.me/+Wj9XsjE7a4s1N2I1">⏤꯭𖣐᪵𖡡꯭𝆭𐎓⏤𝐑𝐚𝐡𝐮𝐥 ꯭𖠌𐎙ꭙ⁷𖡡</a>\n
+[⸙] 𝐃𝐞𝐯 ➳ <a href="tg://user?id=7439897927">⏤꯭𖣐᪵𖡡꯭𝆭𐎓⏤𝐑𝐚𝐡𝐮𝐥 ꯭𖠌𐎙ꭙ⁷𖡡</a>\n
 """
         await bot.reply_to(message, text, parse_mode="HTML", disable_web_page_preview=True)
         await log_action(f"VIP status checked by user {user_id_str}")
@@ -211,6 +261,6 @@ def register(bot):
 """
         for item in autos[user_id_str]:
             text += f"<a href=\"{LINK}\">[⸙]</a> Region: <code>{item['region']}</code>, UID: <code>{item['uid']}</code>, Last liked: <code>{item.get('last_liked', 'Never')}</code>\n"
-        text += f"[⸙] ʙᴏᴛ ʙʏ ➳ <a href=\"https://t.me/+Wj9XsjE7a4s1N2I1\">⏤꯭𖣐᪵𖡡꯭𝆭𐎓⏤𝐑𝐚𝐡𝐮𝐥 ꯭𖠌𐎙ꭙ⁷𖡡</a>"
+        text += f"[⸙] 𝐃𝐞𝐯 ➳ <a href=\"tg://user?id=7439897927\">⏤꯭𖣐᪵𖡡꯭𝆭𐎓⏤𝐑𝐚𝐡𝐮𝐥 ꯭𖠌𐎙ꭙ⁷𖡡</a>"
         await bot.reply_to(message, text, parse_mode="HTML", disable_web_page_preview=True)
         await log_action(f"User {user_id_str} requested auto likes list")
