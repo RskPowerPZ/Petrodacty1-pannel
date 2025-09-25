@@ -14,7 +14,7 @@ BLOCKS_FILE = Path("data/blocks.json")
 MAX_MSG_LEN = 4000  # Telegram safe message length limit
 
 # Bot attribution text
-BOT_BY_TEXT = '[⸙] 𝐃𝐞𝐯 ➳ <a href="tg://user?id=7470004765">⏤꯭𖣐᪵𖡡꯭𝆭𐎓⏤𝐑𝐚𝐡𝐮𝐥 ꯭𖠌𐎙ꭙ⁷𖡡</a>\n'
+BOT_BY_TEXT = '[⸙] 𝐃𝐞𝐯 ➳ <a href="tg://user?id=7439897927">⏤꯭𖣐᪵𖡡꯭𝆭𐎓⏤𝐑𝐚𝐡𝐮𝐥 ꯭𖠌𐎙ꭙ⁷𖡡</a>\n'
 
 def is_blocked(user_id: int) -> bool:
     """
@@ -76,7 +76,7 @@ def not_blocked(func):
     Decorator to ensure the user is not blocked.
     """
     async def wrapper(message):
-        if await is_blocked(message.from_user.id):
+        if is_blocked(message.from_user.id):  # Synchronous call, no await
             await bot.reply_to(
                 message,
                 f"""
@@ -126,8 +126,8 @@ def register(bot):
 
         try:
             user_id_str = str(user.id)
-            is_vip_status = is_vip(user.id)  # Use synchronous function
-            is_blocked_status = is_blocked(user.id)  # Use synchronous function
+            is_vip_status = is_vip(user.id)  # Synchronous call, no await
+            is_blocked_status = is_blocked(user.id)  # Synchronous call, no await
             name = escape(user.first_name or 'Unknown')  # Sanitize for HTML
             username = f"@{escape(user.username)}" if user.username else "N/A"  # Sanitize for HTML
             chat_id = message.chat.id
@@ -147,7 +147,7 @@ def register(bot):
 <a href="{LINK}">[⸙]</a> 𝐍𝐚𝐦𝐞 ➳ <b>{name}</b>
 <a href="{LINK}">[⸙]</a> 𝐔𝐬𝐞𝐫𝐧𝐚𝐦𝐞 ➳ <b>{username}</b>
 <a href="{LINK}">[⸙]</a> 𝐔𝐬𝐞𝐫 𝐈𝐃 ➳ <code>{user_id_str}</code>
-<a href="{LINK}">[⸙]</a> 𝐂𝐡𝐚𝐭 𝐈𝐃 ➳ <code>{chat_id}</code>
+<a href="{LINK}">[⸙]</a> �{C}h𝐚𝐭 𝐈𝐃 ➳ <code>{chat_id}</code>
 <a href="{LINK}">[⸙]</a> 𝐒𝐭𝐚𝐭𝐮𝐬 ➳ <b>{status}</b>
 <a href="{LINK}">[⸙]</a> 𝐕𝐈𝐏 ➳ <b>{vip_text}</b>
 <a href="{LINK}">[⸙]</a> 𝐁𝐥𝐨𝐜𝐤𝐞𝐝 ➳ <b>{blocked_text}</b>
