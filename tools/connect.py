@@ -15,5 +15,5 @@ def register(bot):
         if call.from_user.id == OWNER_ID:
             text = "Admin Commands:\n/block\n/unblock\n/blocklist\n/broad\n/grant\n/grants\n/promotion\n/approve\n/vip\n/premium\n/setremain\n/likes"
         else:
-            text = "User Commands:\n/like {region} {uid}\n/add {region} {uid}\n/autolist\n/remain\n/id\n/userinfo\n/check\n/connect"
+            text = "User Commands:\n/like {region} {uid}\n/add {region} {uid}\n/autolist\n/remain\n/id\n/info\n/check\n/connect"
         await bot.edit_message_text(text, call.message.chat.id, call.message.id)
