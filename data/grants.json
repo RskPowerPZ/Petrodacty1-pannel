@@ -9,8 +9,10 @@
     },
     "-1002284467099": {
         "name": "Ｇᴀʀᴇɴᴀ Ｆʀᴇᴇ Ｆɪʀᴇ 〆 Ｃᴏᴍᴍᴜɴɪᴛʏ Ｔᴇᴀᴍs 🇮🇳",
-        "remain": 50,
+        "remain": 1,
         "channel_link": null,
-        "approved": false
+        "approved": false,
+        "initial_remain": 1,
+        "last_reset": "2025-09-25"
     }
 }
