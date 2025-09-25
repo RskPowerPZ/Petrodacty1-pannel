@@ -40,3 +40,4 @@
 [10:20 25-09-2025] User 6264372980 requested auto likes list
 [14:29 25-09-2025] Failed to send broadcast to 1295542470: A request to the Telegram API was unsuccessful. Error code: 403. Description: Forbidden: bot can't initiate conversation with a user
 [14:29 25-09-2025] Failed to send broadcast to 7439897927: A request to the Telegram API was unsuccessful. Error code: 403. Description: Forbidden: bot can't initiate conversation with a user
+[14:29 25-09-2025] Failed to send broadcast to 8462612416: A request to the Telegram API was unsuccessful. Error code: 403. Description: Forbidden: bots can't send messages to bots
