@@ -1,8 +1,8 @@
 {
     "-1002800729756": {
         "name": "BLAC CONTENTS",
-        "initial_remain": 50,
-        "remain": 50,
+        "initial_remain": 200,
+        "remain": 200,
         "promotion_channel": null,
         "approved": false,
         "last_reset": "2025-09-25"
