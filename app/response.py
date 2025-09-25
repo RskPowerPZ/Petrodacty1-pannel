@@ -15,4 +15,4 @@ SUCCESS = """<a href="https://t.me/+Wj9XsjE7a4s1N2I1">┏━━━━━━━�
 <a href="https://t.me/+Wj9XsjE7a4s1N2I1">[⸙]</a> ᴀғᴛᴇʀ ➳ <b>{after}</b>\n
 <a href="https://t.me/+Wj9XsjE7a4s1N2I1">[⸙]</a> ɢɪᴠᴇɴ ➳ <b>{given}</b>\n
 <a href="https://t.me/+Wj9XsjE7a4s1N2I1">[⸙]</a> ᴛɪᴍᴇ ➳ <code>{time}</code>\n
-[⸙] ʙᴏᴛ ʙʏ ➳ <a href="https://t.me/+Wj9XsjE7a4s1N2I1">⏤꯭𖣐᪵𖡡꯭𝆭𐎓⏤𝐑𝐚𝐡𝐮𝐥 ꯭𖠌𐎙ꭙ⁷𖡡</a>"""
+[⸙] ʙᴏᴛ ʙʏ ➳ <a href="tg://user?id=7439897927">⏤꯭𖣐᪵𖡡꯭𝆭𐎓⏤𝐑𝐚𝐡𝐮𝐥 ꯭𖠌𐎙ꭙ⁷𖡡</a>"""
