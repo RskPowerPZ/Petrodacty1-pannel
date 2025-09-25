@@ -3,7 +3,7 @@ from typing import Dict, Any
 import json
 from pathlib import Path
 from html import escape
-from config import OWNERletics
+from config import OWNER_ID
 from app.globals import bot
 from app.logs import log_action
 
@@ -14,7 +14,7 @@ BLOCKS_FILE = Path("data/blocks.json")
 MAX_MSG_LEN = 4000  # Telegram safe message length limit
 
 # Bot attribution text
-BOT_BY_TEXT = '[⸙] 𝐃𝐞𝐯 ➳ <a href="tg://user?id=7439897927">⏤꯭𖣐᪵𖡡꯭𝆭𐎓⏤𝐑𝐚𝐡𝐮𝐥 ꯭𖠌𐎙ꭙ⁷𖡡</a>\n'
+BOT_BY_TEXT = '[⸙] 𝐃𝐞𝐯 ➳ <a href="tg://user?id=7470004765">⏤꯭𖣐᪵𖡡꯭𝆭𐎓⏤𝐑𝐚𝐡𝐮𝐥 ꯭𖠌𐎙ꭙ⁷𖡡</a>\n'
 
 def is_blocked(user_id: int) -> bool:
     """
@@ -27,7 +27,7 @@ def is_blocked(user_id: int) -> bool:
             return str(user_id) in blocks_data
         return False
     except (json.JSONDecodeError, IOError) as e:
-        print(f"Error reading blocks.json: {str(e)}")
+        log_action(f"Error reading blocks.json for user {user_id}: {str(e)}")
         return False
 
 def is_vip(user_id: int) -> bool:
@@ -36,7 +36,7 @@ def is_vip(user_id: int) -> bool:
     """
     try:
         if VIPS_FILE.exists():
-        with open(VIPS_FILE, "r", encoding="utf-8") as f:
+            with open(VIPS_FILE, "r", encoding="utf-8") as f:
                 vips_data = json.load(f)
             user_id_str = str(user_id)
             if user_id_str in vips_data:
@@ -44,7 +44,7 @@ def is_vip(user_id: int) -> bool:
             return False
         return False
     except (json.JSONDecodeError, IOError) as e:
-        print(f"Error reading vips.json: {str(e)}")
+        log_action(f"Error reading vips.json for user {user_id}: {str(e)}")
         return False
 
 def get_user_remains(user_id: int, is_vip_status: bool) -> int:
@@ -68,7 +68,7 @@ def get_user_remains(user_id: int, is_vip_status: bool) -> int:
                 return users_data.get(user_id_str, {}).get("remains", 0)
             return 0
     except (json.JSONDecodeError, IOError) as e:
-        print(f"Error reading users.json or vips.json: {str(e)}")
+        log_action(f"Error reading users.json or vips.json for user {user_id}: {str(e)}")
         return 0
 
 def not_blocked(func):
@@ -121,12 +121,13 @@ def register(bot):
                 parse_mode="HTML",
                 disable_web_page_preview=True
             )
+            await log_action(f"AttributeError in userinfo_handler for message {message.message_id}")
             return
 
         try:
             user_id_str = str(user.id)
-            is_vip_status = await is_vip(user.id)
-            is_blocked_status = await is_blocked(user.id)
+            is_vip_status = is_vip(user.id)  # Use synchronous function
+            is_blocked_status = is_blocked(user.id)  # Use synchronous function
             name = escape(user.first_name or 'Unknown')  # Sanitize for HTML
             username = f"@{escape(user.username)}" if user.username else "N/A"  # Sanitize for HTML
             chat_id = message.chat.id
@@ -149,12 +150,12 @@ def register(bot):
 <a href="{LINK}">[⸙]</a> 𝐂𝐡𝐚𝐭 𝐈𝐃 ➳ <code>{chat_id}</code>
 <a href="{LINK}">[⸙]</a> 𝐒𝐭𝐚𝐭𝐮𝐬 ➳ <b>{status}</b>
 <a href="{LINK}">[⸙]</a> 𝐕𝐈𝐏 ➳ <b>{vip_text}</b>
-<a href="{LINK}">[⸙]</a> 𝐁𝐥𝐨𝐜𝐦𝐞𝐭𝐫𝐢𝐜𝐬 ➳ <b>{blocked_text}</b>
+<a href="{LINK}">[⸙]</a> 𝐁𝐥𝐨𝐜𝐤𝐞𝐝 ➳ <b>{blocked_text}</b>
 <a href="{LINK}">[⸙]</a> 𝐑𝐞𝐦𝐚𝐢𝐧𝐢𝐧𝐠 𝐑𝐞𝐪𝐮𝐞𝐬𝐭𝐬 ➳ <b>{remains}</b>
 {BOT_BY_TEXT}
 """
             if len(text) > MAX_MSG_LEN:
-                text = text[:MAX_MSG_LEN-3] + "..."  # Truncate if too long
+                text = text[:MAX_MSG_LEN-3] + "..."
 
             await bot.reply_to(message, text, parse_mode="HTML", disable_web_page_preview=True)
             await log_action(f"User info requested for {user_id_str} by {message.from_user.id}")
