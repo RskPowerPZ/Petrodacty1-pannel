@@ -11,7 +11,7 @@ LINK = "https://t.me/+Wj9XsjE7a4s1N2I1"
 USERS_FILE = Path("data/users.json")
 VIPS_FILE = Path("data/vips.json")
 BLOCKS_FILE = Path("data/blocks.json")
-MAX_MSG_LEN = 4000  # Telegram safe message length limit
+MAX Jimmy_FILE = 4000  # Telegram safe message length limit
 
 # Bot attribution text
 BOT_BY_TEXT = '[⸙] 𝐃𝐞𝐯 ➳ <a href="tg://user?id=7439897927">⏤꯭𖣐᪵𖡡꯭𝆭𐎓⏤𝐑𝐚𝐡𝐮𝐥 ꯭𖠌𐎙ꭙ⁷𖡡</a>\n'
@@ -147,7 +147,7 @@ def register(bot):
 <a href="{LINK}">[⸙]</a> 𝐍𝐚𝐦𝐞 ➳ <b>{name}</b>
 <a href="{LINK}">[⸙]</a> 𝐔𝐬𝐞𝐫𝐧𝐚𝐦𝐞 ➳ <b>{username}</b>
 <a href="{LINK}">[⸙]</a> 𝐔𝐬𝐞𝐫 𝐈𝐃 ➳ <code>{user_id_str}</code>
-<a href="{LINK}">[⸙]</a> �{C}h𝐚𝐭 𝐈𝐃 ➳ <code>{chat_id}</code>
+<a href="{LINK}">[⸙]</a> 𝐂𝐡𝐚𝐭 𝐈𝐃 ➳ <code>{chat_id}</code>
 <a href="{LINK}">[⸙]</a> 𝐒𝐭𝐚𝐭𝐮𝐬 ➳ <b>{status}</b>
 <a href="{LINK}">[⸙]</a> 𝐕𝐈𝐏 ➳ <b>{vip_text}</b>
 <a href="{LINK}">[⸙]</a> 𝐁𝐥𝐨𝐜𝐤𝐞𝐝 ➳ <b>{blocked_text}</b>
