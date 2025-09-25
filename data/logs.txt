@@ -34,3 +34,4 @@
 [10:00 25-09-2025] Failed to send broadcast to 7439897927: A request to the Telegram API was unsuccessful. Error code: 403. Description: Forbidden: bot can't initiate conversation with a user
 [10:00 25-09-2025] Broadcast finished. Sent: 4, Failed: 3, Total: 7
 [10:17 25-09-2025] ɢʀᴀɴᴛ ᴀᴅᴅᴇᴅ ғᴏʀ ɢʀᴏᴜᴘ -1002800729756 ᴡɪᴛʜ 50 ʀᴇᴍᴀɪɴs.
+[10:18 25-09-2025] Remain for group -1002800729756 set to 200
