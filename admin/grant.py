@@ -2,22 +2,23 @@
 from config import OWNER_ID
 from app.globals import grants, save_json, bot, get_reset_date
 from app.logs import log_action
-from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 LINK = "https://t.me/+Wj9XsjE7a4s1N2I1"
 MAX_MSG_LEN = 4000  # Telegram safe limit
 
+# Bot by text (fixed, inside quotes)
+BOT_BY_TEXT = '[⸙] ʙᴏᴛ ʙʏ ➳ <a href="tg://user?id=7439897927">⏤꯭𖣐᪵𖡡꯭𝆭𐎓⏤𝐑𝐚𝐡𝐮𝐥 ꯭𖠌𐎙ꭙ⁷𖡡</a>\n'
+
 # Usage help block
 USAGE_TEXT = f"""
 <a href="{LINK}">┏━━━━━━━⍟</a>
-<a href="{LINK}">┃𝐆𝐫𝐚𝐧𝐭 𝐜𝐨𝐦𝐦𝐚𝐧𝐝 𝐡𝐞𝐥𝐩 </a>
+<a href="{LINK}">┃𝐆𝐫𝐚𝐧𝐭 𝐜𝐨𝐦𝐦𝐚𝐧𝐝 𝐡𝐞𝐥𝐩</a>
 <a href="{LINK}">┗━━━━━━━━━━━⊛</a>
 
 <a href="{LINK}">[⸙]</a> Usᴀɢᴇ ➳ <code>/grant &lt;ɢʀᴏᴜᴘ_ɪᴅ&gt; &lt;ʀᴇᴍᴀɪɴɪɴɢ_ʀᴇǫᴜᴇsᴛs&gt;</code>\n
 <a href="{LINK}">[⸙]</a> Exᴀᴍᴘʟᴇ ➳ <code>/grant -1001234567890 50</code>\n
 <a href="{LINK}">[⸙]</a> Dᴇsᴄʀɪᴘᴛɪᴏɴ ➳ Aᴅᴅs ᴏʀ ᴜᴘᴅᴀᴛᴇs ᴀ ɢʀᴀɴᴛ ғᴏʀ ᴀ ɢʀᴏᴜᴘ.\n
-[⸙]ʙᴏᴛ ʙʏ ➳ <a href="tg://user?id=7439897927">⏤꯭𖣐᪵𖡡꯭𝆭𐎓⏤𝐑𝐚𝐡𝐮𝐥 ꯭𖠌𐎙ꭙ⁷𖡡</a>\n
-
+{BOT_BY_TEXT}
 """
 
 def register(bot):
@@ -67,7 +68,7 @@ def register(bot):
 
 <a href='{LINK}'>[⸙]</a> Gʀᴏᴜᴘ ➳ <b>{group_name}</b>\n
 <a href='{LINK}'>[⸙]</a> Rᴇᴍᴀɪɴs ➳ <b>{remain}</b>\n
-[⸙]ʙᴏᴛ ʙʏ ➳ <a href="tg://user?id=7439897927">⏤꯭𖣐᪵𖡡꯭𝆭𐎓⏤𝐑𝐚𝐡𝐮𝐥 ꯭𖠌𐎙ꭙ⁷𖡡</a>\n
+{BOT_BY_TEXT}
 """
         await bot.reply_to(message, reply_text, parse_mode='HTML', disable_web_page_preview=True)
 
@@ -92,8 +93,7 @@ def register(bot):
                 f"<a href='{LINK}'>[⸙]</a>ɪᴅ:</a> <code>{gid}</code> | "
                 f"<a href='{LINK}'>[⸙]</a>ʀᴇᴍᴀɪɴs:</a> <b>{remain}</b> | "
                 f"<a href='{LINK}'>[⸙]</a>ɪɴᴠɪᴛᴇ:</a> {link}\n"
-[⸙]ʙᴏᴛ ʙʏ ➳ <a href="tg://user?id=7439897927">⏤꯭𖣐᪵𖡡꯭𝆭𐎓⏤𝐑𝐚𝐡𝐮𝐥 ꯭𖠌𐎙ꭙ⁷𖡡</a>\n
-
+                f"{BOT_BY_TEXT}"
             )
             lines.append(line)
 
