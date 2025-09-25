@@ -10,5 +10,12 @@
         "daily_limit": 61,
         "remains": 61,
         "last_reset": "2025-09-22"
+    },
+    "7470004765": {
+        "bought_date": "2025-09-25T10:19:05.135290",
+        "expiry_date": "2025-11-14T10:19:05.135290",
+        "daily_limit": 500,
+        "remains": 500,
+        "last_reset": "2025-09-25"
     }
 }
