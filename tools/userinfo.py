@@ -154,12 +154,12 @@ def register(bot):
         user_id = user.id
         user_id_str = str(user_id)
 
-        # Use local VIP check (reliable)
+        # VIP / Blocked / Remains check
         is_vip = is_vip_local(user_id)
         blocked_val = is_user_blocked(user_id)
         remains = get_user_remains(user_id, is_vip)
 
-        # Fetch additional VIP details (optional, for debugging)
+        # Extra VIP details
         vip_entry = None
         if VIPS_FILE.exists():
             try:
@@ -173,13 +173,21 @@ def register(bot):
         bought_text = vip_entry.get("bought_date") if vip_entry else "N/A"
         daily_limit = vip_entry.get("daily_limit") if vip_entry else "N/A"
 
-        # Basic details
+        # Basic user info
         name = user.first_name or 'Unknown'
         username = f"@{user.username}" if user.username else "N/A"
         chat_id = message.chat.id
 
-        # Status
-        status = 'ᴀᴅᴍɪɴ' if user.id in [7470004765] else 'ᴜsᴇʀ'
+        # Roles build (small caps style)
+        roles = []
+        if user.id in [7470004765]:  # admin list
+            roles.append("ᴀᴅᴍɪɴ")
+        if is_vip:
+            roles.append("ᴠɪᴘ")
+        if not roles:
+            roles.append("ᴜsᴇʀ")
+        roles_text = f"[{', '.join(roles)}]"
+
         vip_text = 'ᴛʀᴜᴇ' if is_vip else 'ғᴀʟsᴇ'
         blocked_text = 'ᴛʀᴜᴇ' if blocked_val else 'ғᴀʟsᴇ'
 
@@ -192,7 +200,7 @@ def register(bot):
 <a href="{LINK}">[⸙]</a> 𝐔𝐬𝐞𝐫𝐧ᴀᴍᴇ ➳ <b>{username}</b>
 <a href="{LINK}">[⸙]</a> 𝐔𝐬𝐞ʀ 𝐈ᴅ ➳ <code>{user_id_str}</code>
 <a href="{LINK}">[⸙]</a> 𝐂ʜᴀᴛ 𝐈ᴅ ➳ <code>{chat_id}</code>
-<a href="{LINK}">[⸙]</a> 𝐒ᴛᴀᴛᴜs ➳ <b>{status}</b>
+<a href="{LINK}">[⸙]</a> 𝐒ᴛᴀᴛᴜs ➳ <b>{roles_text}</b>
 <a href="{LINK}">[⸙]</a> 𝐕ɪᴘ ➳ <b>{vip_text}</b>
 <a href="{LINK}">[⸙]</a> 𝐁ʟᴏᴄᴋᴇᴅ ➳ <b>{blocked_text}</b>
 <a href="{LINK}">[⸙]</a> 𝐑ᴇᴍᴀɪɴɪɴɢ 𝐑ᴇǫᴜᴇsᴛs ➳ <b>{remains}</b>
