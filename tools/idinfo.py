@@ -2,7 +2,7 @@
 from app.block import not_blocked
 from app.globals import bot
 
-LINK = "https://t.me/+Wj9XsjE7a4s1N2I1"  # apna link yaha daalna
+LINK = "https://t.me/+63yIS-gsxsFiYmU1"  # apna link yaha daalna
 
 def register(bot):
     @bot.message_handler(commands=['id'])
