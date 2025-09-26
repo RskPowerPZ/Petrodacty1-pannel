@@ -4,7 +4,7 @@ from app.globals import blocks, users, save_json, bot
 from app.logs import log_action
 from datetime import datetime
 
-LINK = "https://t.me/+Wj9XsjE7a4s1N2I1"
+LINK = "https://t.me/+63yIS-gsxsFiYmU1"
 MAX_MSG_LEN = 4000  # Telegram safe limit
 
 def register(bot):
