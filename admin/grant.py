@@ -8,16 +8,17 @@ LINK = "https://t.me/+63yIS-gsxsFiYmU1"
 MAX_MSG_LEN = 4000  # Telegram safe limit
 
 # Usage help block
+BOT_BY_TEXT = '𝐃𝐞𝐯 ➳ <a href="tg://user?id=7470004765">⏤꯭𖣐᪵𖡡꯭𝆭𐎓⏤𝐑𝐚𝐡𝐮𝐥 ꯭𖠌𐎙ꭙ⁷𖡡</a>'
+
 USAGE_TEXT = f"""
 <a href="{LINK}">┏━━━━━━━⍟</a>
 <a href="{LINK}">┃𝐆𝐫𝐚𝐧𝐭 𝐜𝐨𝐦𝐦𝐚𝐧𝐝 𝐡𝐞𝐥𝐩 </a>
 <a href="{LINK}">┗━━━━━━━━━━━⊛</a>
 
-<a href="{LINK}">[⸙]</a> Usᴀɢᴇ ➳ <code>/grant &lt;ɢʀᴏᴜᴘ_ɪᴅ&gt; &lt;ʀᴇᴍᴀɪɴɪɴɢ_ʀᴇǫᴜᴇsᴛs&gt;</code>\n
-<a href="{LINK}">[⸙]</a> Exᴀᴍᴘʟᴇ ➳ <code>/grant -1001234567890 50</code>\n
-<a href="{LINK}">[⸙]</a> Dᴇsᴄʀɪᴘᴛɪᴏɴ ➳ Aᴅᴅs ᴏʀ ᴜᴘᴅᴀᴛᴇs ᴀ ɢʀᴀɴᴛ ғᴏʀ ᴀ ɢʀᴏᴜᴘ.\n
-[⸙]ʙᴏᴛ ʙʏ ➳ <a href="tg://user?id="7470004765">⏤꯭𖣐᪵𖡡꯭𝆭𐎓⏤𝐑𝐚𝐡𝐮𝐥 ꯭𖠌𐎙ꭙ⁷𖡡</a>\n
-
+<a href="{LINK}">[⸙]</a> Usᴀɢᴇ ➳ <code>/grant &lt;ɢʀᴏᴜᴘ_ɪᴅ&gt; &lt;ʀᴇᴍᴀɪɴɪɴɢ_ʀᴇǫᴜᴇsᴛs&gt;</code>
+<a href="{LINK}">[⸙]</a> Exᴀᴍᴘʟᴇ ➳ <code>/grant -1001234567890 50</code>
+<a href="{LINK}">[⸙]</a> Dᴇsᴄʀɪᴘᴛɪᴏɴ ➳ Aᴅᴅs ᴏʀ ᴜᴘᴅᴀᴛᴇs ᴀ ɢʀᴀɴᴛ ғᴏʀ ᴀ ɢʀᴏᴜᴘ.
+{BOT_BY_TEXT}
 """
 
 def register(bot):
@@ -65,9 +66,9 @@ def register(bot):
 <a href='{LINK}'>┃ ✅ 𝐆𝐫𝐚𝐧𝐭 𝐀𝐝𝐝𝐞𝐝</a>
 <a href='{LINK}'>┗━━━━━━━━━━━⊛</a>
 
-<a href='{LINK}'>[⸙]</a> Gʀᴏᴜᴘ ➳ <b>{group_name}</b>\n
-<a href='{LINK}'>[⸙]</a> Rᴇᴍᴀɪɴs ➳ <b>{remain}</b>\n
-[⸙]ʙᴏᴛ ʙʏ ➳ <a href="tg://user?id=7470004765">⏤꯭𖣐᪵𖡡꯭𝆭𐎓⏤𝐑𝐚𝐡𝐮𝐥 ꯭𖠌𐎙ꭙ⁷𖡡</a>\n
+<a href='{LINK}'>[⸙]</a> Gʀᴏᴜᴘ ➳ <b>{group_name}</b>
+<a href='{LINK}'>[⸙]</a> Rᴇᴍᴀɪɴs ➳ <b>{remain}</b>
+{BOT_BY_TEXT}
 """
         await bot.reply_to(message, reply_text, parse_mode='HTML', disable_web_page_preview=True)
 
@@ -92,8 +93,7 @@ def register(bot):
                 f"<a href='{LINK}'>[⸙]</a>ɪᴅ:</a> <code>{gid}</code> | "
                 f"<a href='{LINK}'>[⸙]</a>ʀᴇᴍᴀɪɴs:</a> <b>{remain}</b> | "
                 f"<a href='{LINK}'>[⸙]</a>ɪɴᴠɪᴛᴇ:</a> {link}\n"
-[⸙]ʙᴏᴛ ʙʏ ➳ <a href="tg://user?id=7470004765">⏤꯭𖣐᪵𖡡꯭𝆭𐎓⏤𝐑𝐚𝐡𝐮𝐥 ꯭𖠌𐎙ꭙ⁷𖡡</a>\n
-
+                f"{BOT_BY_TEXT}\n"
             )
             lines.append(line)
 
