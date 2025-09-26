@@ -55,3 +55,4 @@
 [15:36 25-09-2025] Error in userinfo_handler for 7470004765: name 'C' is not defined
 [10:34 26-09-2025] User 6264372980 blocked. Reason: No reason provided
 [10:50 26-09-2025] User 7470004765 blocked. Reason: testing
+[10:51 26-09-2025] User 7470004765 unblocked.
