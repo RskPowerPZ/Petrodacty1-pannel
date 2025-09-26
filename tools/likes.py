@@ -11,7 +11,7 @@ from app.block import not_blocked, is_blocked
 from app.globals import users, vips, autos, save_json, bot, grants, get_reset_date
 from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
 
-LINK = "https://t.me/+Wj9XsjE7a4s1N2I1"
+LINK = "https://t.me/+63yIS-gsxsFiYmU1"
 
 async def execute_like(region, uid, user_id, group_id=None, auto=False):
     try:
