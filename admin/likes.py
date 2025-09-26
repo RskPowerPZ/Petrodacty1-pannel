@@ -3,7 +3,7 @@ from config import OWNER_ID
 from app.globals import bot
 from app.logs import log_action
 
-LINK = "https://t.me/+Wj9XsjE7a4s1N2I1"
+LINK = "https://t.me/+63yIS-gsxsFiYmU1"
 
 def register(bot):
     @bot.message_handler(commands=['likes'])
