@@ -6,7 +6,7 @@ from config import OWNER_ID
 from app.globals import users, grants, bot
 from app.logs import log_action
 
-LINK = "https://t.me/+Wj9XsjE7a4s1N2I1"
+LINK = "https://t.me/+63yIS-gsxsFiYmU1"
 
 async def send_copy(uid, chat_id, msg_id):
     try:
@@ -107,7 +107,7 @@ def register(bot):
 <a href="{LINK}">[⸙]</a> 𝐅𝐚𝐢𝐥𝐞𝐝 ➳ <code>{fail_count}</code>\n
 <a href="{LINK}">[⸙]</a> 𝐒𝐮𝐜𝐜𝐞𝐬𝐬 ➳ <code>{success_rate}%</code>\n
 <a href="{LINK}">[⸙]</a> 𝐓𝐢𝐦𝐞 ➳ <code>{time_str}</code>\n
-[⸙] 𝐃𝐞𝐯 ➳ <a href="tg://user?id=7439897927">⏤꯭𖣐᪵𖡡꯭𝆭𐎓⏤𝐑𝐚𝐡𝐮𝐥 ꯭𖠌𐎙ꭙ⁷𖡡</a>\n
+[⸙] 𝐃𝐞𝐯 ➳ <a href="tg://user?id=7470004765">⏤꯭𖣐᪵𖡡꯭𝆭𐎓⏤𝐑𝐚𝐡𝐮𝐥 ꯭𖠌𐎙ꭙ⁷𖡡</a>\n
 """
         await log_action(f"Broadcast finished. Sent: {sent_count}, Failed: {fail_count}, Total: {total}")
         await bot.edit_message_text(done, message.chat.id, status_message.message_id, parse_mode="HTML", disable_web_page_preview=True)
